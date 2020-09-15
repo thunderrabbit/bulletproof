@@ -101,7 +101,6 @@ class Image implements \ArrayAccess
         /* check if php_exif is enabled */
         if (!function_exists('exif_imagetype')) {
           $this->error = 'Function \'exif_imagetype\' Not found. Please enable \'php_exif\' in your PHP.ini';
-          return false;
       }
 
       $this->_files = $_files;
