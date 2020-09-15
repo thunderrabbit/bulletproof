@@ -98,7 +98,6 @@ class Image implements \ArrayAccess
      */
     public function __construct(array $_files = array())
     {
-
         /* check if php_exif is enabled */
         if (!function_exists('exif_imagetype')) {
           $this->error = 'Function \'exif_imagetype\' Not found. Please enable \'php_exif\' in your PHP.ini';
@@ -394,28 +393,20 @@ class Image implements \ArrayAccess
       return $this;
     }
 
-    /**
-     * Validate image size, dimension or mimetypes
-     *
-     * @return boolean
-     */
-    protected function constraintValidator()
-    {
-      /* check image for valid mime types and return mime */
-      $this->getImageMime($this->_files['tmp_name']);
 
+    public function validateMimes() {
+      $this->getImageMime($this->_files['tmp_name']); 
 
-      /* validate image mime type */
-      if (!in_array($this->mime, $this->mimeTypes)) {
+      if(!in_array($this->mime, $this->mimeTypes)) {
         $this->error = sprintf('Invalid File! Only (%s) image types are allowed', implode(', ', $this->mimeTypes));
         return false;
       }
 
-      /* get image sizes */
-      list($minSize, $maxSize) = $this->size;
+      return true;
+    }
 
-
-      /* check image size based on the settings */
+    public function validateSize() {
+      list($minSize, $maxSize) = $this->size; 
       if ($this->_files['size'] < $minSize || $this->_files['size'] > $maxSize) {
         $min = $minSize.' bytes ('.intval($minSize / 1000).' kb)';
         $max = $maxSize.' bytes ('.intval($maxSize / 1000).' kb)';
@@ -423,6 +414,10 @@ class Image implements \ArrayAccess
         return false;
       }
 
+      return true;
+    }
+
+    public function validateDimension() {
       /* check image dimension */
       list($maxWidth, $maxHeight) = $this->dimensions;
       $this->width = $this->getWidth();
@@ -436,6 +431,7 @@ class Image implements \ArrayAccess
       return true;
     }
 
+
     /**
      * Validate and save (upload) file
      *
@@ -447,8 +443,8 @@ class Image implements \ArrayAccess
         return false;
       }
 
-      $isValid = $this->constraintValidator();
-      $this->setName();
+      $isValid = $this->validateSize() && $this->validateMimes() && $this->validateDimension();
+      // $this->setName();
 
       $isSuccess = $isValid && $this->isSaved($this->_files['tmp_name'], $this->getPath());
 
