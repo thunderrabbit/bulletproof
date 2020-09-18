@@ -11,7 +11,7 @@ class uploadTest extends TestCase {
     /**
      *  Initialize an array to mimic the properties $_FILES global
      */
-    public function setUp() {
+    public function setUp() : void {
       $files = array(
           'ikea' => array(
               'name' => __DIR__ . "/monkey.jpg",
