@@ -74,7 +74,7 @@ class uploadTest extends TestCase {
 
     // check if setting image storage is correct
     public function testLocation () {
-      $this->bulletproof->setLocation('uploads');
+      $this->bulletproof->setStorage('uploads');
       $this->assertEquals($this->bulletproof->getStorage(), 'uploads');
     }
 
@@ -82,11 +82,10 @@ class uploadTest extends TestCase {
     // check full path of image uploaded
 
    public function testFullpath(){
-        $this->bulletproof->setLocation('uploads');
+        $this->bulletproof->setStorage('uploads');
         $this->bulletproof->setName('2012');
         $this->bulletproof->setMime(['jpeg']);
         $upload = $this->bulletproof->upload();
-        $getMime = $this->bulletproof->getMime();
         $this->assertSame($upload->getPath(), 'uploads/2012.jpeg');
     }
 
@@ -127,7 +126,7 @@ class uploadTest extends TestCase {
 public function testImageDimensionFailWithMsg () {
   $this->bulletproof->setDimension(42, 43);
   $this->bulletproof->upload();
-    $this->assertEquals($this->bulletproof->getError(), 'Image should be smaller than 43px in height, and smaller than 42px in width');
+    $this->assertEquals($this->bulletproof->getError(), 'Image height should be smaller than (43) pixels');
 }
 
 
