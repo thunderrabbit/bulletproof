@@ -98,6 +98,7 @@ class Image implements \ArrayAccess
      */
     public function __construct(array $_files = array())
     {
+
         /* check if php_exif is enabled */
         if (!function_exists('exif_imagetype')) {
           $this->error = 'Function \'exif_imagetype\' Not found. Please enable \'php_exif\' in your PHP.ini';
@@ -112,7 +113,7 @@ class Image implements \ArrayAccess
      * @param mixed $offset
      * @param mixed $value
      */
-    public function offsetSet($offset, $value) {}
+    public function offsetSet($offset, $value){}
 
     /**
      * \ArrayAccess unused method
@@ -151,7 +152,7 @@ class Image implements \ArrayAccess
         $this->error = $this->commonErrors[$this->_files['error']];
       }
 
-      return $this->error ? false : true; 
+      return (bool) $this->error; 
     }
 
     /**
@@ -373,6 +374,7 @@ class Image implements \ArrayAccess
      */
     public function setStorage($dir = 'uploads', $permission = 0666)
     {
+
       $isDirectoryValid = $this->isDirectoryValid($dir);
 
       if (!$isDirectoryValid) {
@@ -393,7 +395,7 @@ class Image implements \ArrayAccess
     }
 
 
-    public function validateMimes() {
+    public function validateMime() {
       $this->getImageMime($this->_files['tmp_name']); 
 
       if(!in_array($this->mime, $this->mimeTypes)) {
@@ -422,12 +424,24 @@ class Image implements \ArrayAccess
       $this->width = $this->getWidth();
       $this->height = $this->getHeight();
 
-      if ($this->height > $maxHeight || $this->width > $maxWidth) {
-        $this->error = 'Image should be smaller than ' . $maxHeight . 'px in height, and smaller than ' . $maxWidth . 'px in width';
-        return false;
+      if($this->height > $maxHeight) {
+        $this->error = sprintf('Image height should be smaller than (%s) pixels', $maxHeight); 
+
+        return false; 
+      }
+
+      if($this->width > $maxWidth) {
+        $this->error = sprintf('Image width should be smaller than (%s) pixels', $maxHeight); 
+
+        return false; 
       }
 
       return true;
+    }
+
+    public function isValid() {
+
+      return $this->validateSize() && $this->validateMime() && $this->validateDimension();
     }
 
 
@@ -438,14 +452,13 @@ class Image implements \ArrayAccess
      */
     public function upload()
     {
+
       if ($this->error !== '') {
         return false;
       }
 
-      $isValid = $this->validateSize() && $this->validateMimes() && $this->validateDimension();
-      // $this->setName();
 
-      $isSuccess = $isValid && $this->isSaved($this->_files['tmp_name'], $this->getPath());
+      $isSuccess = $this->isValid() && $this->isSaved($this->_files['tmp_name'], $this->getPath());
 
       return $isSuccess ? $this : false;
     }
