@@ -152,7 +152,7 @@ class Image implements \ArrayAccess
         $this->error = $this->commonErrors[$this->_files['error']];
       }
 
-      return (bool) $this->error; 
+      return $this->error ? false : true; 
     }
 
     /**
@@ -441,7 +441,7 @@ class Image implements \ArrayAccess
 
     public function isValid() {
 
-      return $this->validateSize() && $this->validateMime() && $this->validateDimension();
+      return $this->validateMime() && $this->validateSize() && $this->validateDimension();
     }
 
 
@@ -456,6 +456,8 @@ class Image implements \ArrayAccess
       if ($this->error !== '') {
         return false;
       }
+
+      $this->setName();
 
 
       $isSuccess = $this->isValid() && $this->isSaved($this->_files['tmp_name'], $this->getPath());
