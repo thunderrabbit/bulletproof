@@ -297,6 +297,7 @@ class Image implements \ArrayAccess
      */
     public function setName($isNameProvided = null)
     {
+
       if ($isNameProvided) {
         $this->name = filter_var($isNameProvided, FILTER_SANITIZE_STRING);
       }else{
@@ -457,7 +458,7 @@ class Image implements \ArrayAccess
         return false;
       }
 
-      $this->setName();
+      $this->getName();
 
 
       $isSuccess = $this->isValid() && $this->isSaved($this->_files['tmp_name'], $this->getPath());
