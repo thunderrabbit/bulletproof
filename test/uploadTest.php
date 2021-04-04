@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use TestBootstrap\BulletproofTest; 
+use TestBootstrap\BulletproofTest;
 
 
 class uploadTest extends TestCase {
@@ -24,12 +24,12 @@ class uploadTest extends TestCase {
 
       $this->bulletproof = new BulletproofTest($files);
       $this->bulletproof['ikea'];
-      
+
     }
 
     // check if the name provide in the html input is read by bulletproof
     public function testImageNameIsSame () {
-      $this->bulletproof->setName('samayo'); 
+      $this->bulletproof->setName('samayo');
       $this->assertEquals($this->bulletproof->getName(), 'samayo');
     }
 
@@ -52,7 +52,7 @@ class uploadTest extends TestCase {
 
     // check size of the image is correct
     public function testSize () {
-      $this->bulletproof->upload(); 
+      $this->bulletproof->upload();
       $this->assertEquals($this->bulletproof->getSize(), 17438); // 17438 is size of the monkey.jpg
     }
 
@@ -64,9 +64,9 @@ class uploadTest extends TestCase {
 
     // check width and height of the image
     public function testImageSizes() {
-      $this->bulletproof->upload(); 
-      $isWidth = $this->bulletproof->getWidth() === 384; 
-      $isHeight = $this->bulletproof->getHeight() === 345; 
+      $this->bulletproof->upload();
+      $isWidth = $this->bulletproof->getWidth() === 384;
+      $isHeight = $this->bulletproof->getHeight() === 345;
       $this->assertEquals($this->bulletproof->getMime(), 'jpeg');
 
       $this->assertEquals($isHeight, $isWidth);
@@ -89,11 +89,11 @@ class uploadTest extends TestCase {
         $this->assertSame($upload->getPath(), 'uploads/2012.jpeg');
     }
 
- 
+
     // check json return value of image
      public function testJsonOutput(){
         $upload = $this->bulletproof->setName('we_belive_in_json')->upload();
-        $this->assertSame($upload->getJson(), 
+        $this->assertSame($upload->getJson(),
             '{"name":"we_belive_in_json","mime":"jpeg","height":345,"width":384,"size":17438,"storage":"uploads","path":"uploads\/we_belive_in_json.jpeg"}');
 
     }

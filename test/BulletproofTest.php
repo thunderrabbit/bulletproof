@@ -1,6 +1,6 @@
 <?php
 
-namespace TestBootstrap; 
+namespace TestBootstrap;
 
 class BulletproofTest extends \Bulletproof\Image {
 
@@ -18,6 +18,6 @@ class BulletproofTest extends \Bulletproof\Image {
      */
     public function setLocation($dir = "bulletproof", $optionalPermision = 0666){
     	$this->location = $dir;
-    	return $this; 
+    	return $this;
     }
 }

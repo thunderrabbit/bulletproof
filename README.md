@@ -20,7 +20,7 @@ Or [download it manually][bulletproof_archive] based on the archived version of 
 Usage
 -----
 
-Create an HTML form like this. 
+Create an HTML form like this.
 ```html
 <form method="POST" enctype="multipart/form-data">
   <input type="hidden" name="MAX_FILE_SIZE" value="1000000"/>
@@ -29,18 +29,18 @@ Create an HTML form like this.
 </form>
 ```
 And copy & paste the following code to upload the image
-```php 
+```php
 require_once  "path/to/bulletproof.php";
 
 $image = new Bulletproof\Image($_FILES);
 
 if($image["pictures"]){
-  $upload = $image->upload(); 
+  $upload = $image->upload();
 
   if($upload){
     echo $upload->getFullPath(); // uploads/cat.gif
   }else{
-    echo $image->getError(); 
+    echo $image->getError();
   }
 }
 ```
@@ -56,7 +56,7 @@ Before uploading, you can use these methods to restrict the image size, dimensio
 // Pass a custom name, or it will be auto-generated
 $image->setName($name);
 
-// define the min/max image upload size (size in bytes) 
+// define the min/max image upload size (size in bytes)
 $image->setSize($min, $max);
 
 // define allowed mime types to upload
@@ -70,8 +70,8 @@ $image->setLocation($folderName, $optionalPermission);
 ```
 
 #### Getting Properties
-Methods for getting image info before/after upload. 
-```php 
+Methods for getting image info before/after upload.
+```php
 // get the provided or auto-generated image name
 $image->getName();
 
@@ -99,7 +99,7 @@ $image->getJson();
 
 #### Customized example
 This will set image constrains and return output after upload
-```php 
+```php
 $image = new Bulletproof\Image($_FILES);
 
 $image->setName("samayo")
@@ -114,14 +114,14 @@ if($image["pictures"]){
     echo $image->getFullPath(); // avatars/samayo.gif
   }
 }
-``` 
+```
 
 #### Image Manipulation
 To crop, resize or watermak images, use functions stored in [`src/utils`][utils]
 
 #### Creating custom errors
 Use php exceptions to define custom error responses
-```php 
+```php
 if($image['pictures']){
   try {
     if($image->getMime() !== 'png'){
@@ -135,7 +135,7 @@ if($image['pictures']){
     } else {
       echo $image->getFullPath();
     }
-    
+
   } catch (\Exception $e){
     echo "Error " . $e->getMessage();
   }
@@ -145,7 +145,7 @@ if($image['pictures']){
 #### What makes this secure?  
 * Uses **[`exif_imagetype()`][exif_imagetype_link]** to get the true image mime (`.extension`)
 * Uses **[`getimagesize()`][getimagesize_link]** to check if image has a valid height / width in pixels.
-* Sanitized images names, strict folder permissions and more... 
+* Sanitized images names, strict folder permissions and more...
 
 ### License: MIT
 [utils]: https://github.com/samayo/bulletproof/tree/master/src/utils

@@ -29,7 +29,7 @@
 ### 2.0.5
  - Add feature to get the mimetype before calling upload() method
 
-### 2.0.4 
+### 2.0.4
  - fix #60 (JSON throws error due to a forwardslash in error messages)
 
 ### 2.0.3
@@ -45,9 +45,8 @@
 ### 2.0.0
 - Removed watermark, resize, crop functionality
 - renamed moaar and added getters and setters
-- changed license to MIT 
+- changed license to MIT
 - added `getJson()` to get image info in json format
 - enabled passing of the `$_FILES` array through the class constructor.
 - wrote more unit tests
 - class uses `\ArrayAccess` for intuitive file submit detection
-

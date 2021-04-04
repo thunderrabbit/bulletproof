@@ -1,11 +1,11 @@
 <?php 
 /**
  * BULLETPROOF.
- * 
+ *
  * A single-class PHP library to upload images securely.
- * 
+ *
  * PHP support 5.3+
- * 
+ *
  * @version     5.0.0
  * @author      https://twitter.com/_samayo
  * @link        https://github.com/samayo/bulletproof
@@ -109,7 +109,7 @@ class Image implements \ArrayAccess
 
     /**
      * \ArrayAccess unused method
-     * 
+     *
      * @param mixed $offset
      * @param mixed $value
      */
@@ -117,14 +117,14 @@ class Image implements \ArrayAccess
 
     /**
      * \ArrayAccess unused method
-     * 
+     *
      * @param mixed $offset
      */
     public function offsetExists($offset){}
 
     /**
      * \ArrayAccess unused method
-     * 
+     *
      * @param mixed $offset
      */
     public function offsetUnset($offset){}
@@ -141,7 +141,7 @@ class Image implements \ArrayAccess
         /* return false if $image['key'] isn't found */
         if (!isset($this->_files[$offset])) {
           $this->error = sprintf('No file input found with name: (%s)', $offset);
-          
+
           return false;
         }
 
@@ -152,7 +152,7 @@ class Image implements \ArrayAccess
         $this->error = $this->commonErrors[$this->_files['error']];
       }
 
-      return $this->error ? false : true; 
+      return $this->error ? false : true;
     }
 
     /**
@@ -397,7 +397,7 @@ class Image implements \ArrayAccess
 
 
     public function validateMime() {
-      $this->getImageMime($this->_files['tmp_name']); 
+      $this->getImageMime($this->_files['tmp_name']);
 
       if(!in_array($this->mime, $this->mimeTypes)) {
         $this->error = sprintf('Invalid File! Only (%s) image types are allowed', implode(', ', $this->mimeTypes));
@@ -408,7 +408,7 @@ class Image implements \ArrayAccess
     }
 
     public function validateSize() {
-      list($minSize, $maxSize) = $this->size; 
+      list($minSize, $maxSize) = $this->size;
       if ($this->_files['size'] < $minSize || $this->_files['size'] > $maxSize) {
         $min = $minSize.' bytes ('.intval($minSize / 1000).' kb)';
         $max = $maxSize.' bytes ('.intval($maxSize / 1000).' kb)';
@@ -426,15 +426,15 @@ class Image implements \ArrayAccess
       $this->height = $this->getHeight();
 
       if($this->height > $maxHeight) {
-        $this->error = sprintf('Image height should be smaller than (%s) pixels', $maxHeight); 
+        $this->error = sprintf('Image height should be smaller than (%s) pixels', $maxHeight);
 
-        return false; 
+        return false;
       }
 
       if($this->width > $maxWidth) {
-        $this->error = sprintf('Image width should be smaller than (%s) pixels', $maxHeight); 
+        $this->error = sprintf('Image width should be smaller than (%s) pixels', $maxHeight);
 
-        return false; 
+        return false;
       }
 
       return true;
