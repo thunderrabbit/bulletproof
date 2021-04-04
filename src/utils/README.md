@@ -1,10 +1,10 @@
 ### bulletproof\utils
 
-Contains seperate, stand-alone functions to crop, rezize or watermark images
+Contains separate, stand-alone functions to crop, resize or watermark images
 
 Install
 -----
-open `utils/` folder and require the function you neeed.
+open `utils/` folder and require the function you need.
 
 #### use crop function
 ```php
@@ -32,7 +32,7 @@ $crop = Bulletproof\Utils\crop(
 
 ### with bulletproof
 
-If you want to use these function with the [bulletproof][bulletproof], here are some examples:
+If you want to use these function with [bulletproof][bulletproof], here are some examples:
 
 #### Resizing
 ```php
@@ -59,8 +59,8 @@ if($image["picture"]){
 }
 ```
 
-#### Croping
-The `crop()` function supports resizing by ratio, checkout the file for more.
+#### Cropping
+The `crop()` function supports resizing by ratio, check out the file for more.
 ```php
 require "src/utils/func.image-crop.php";
 
@@ -75,7 +75,7 @@ $crop = Bulletproof\Utils\crop(
 
 ```
 #### Watermark
-The `watermark()` function allows adding watermark into an image
+The `watermark()` function allows adding a watermark into an image
 
 ```php
 require 'src/utils/func.image-watermark.php';
@@ -83,7 +83,7 @@ require 'src/utils/func.image-watermark.php';
 $logo = 'my-logo.png';
 // where to place the watermark
 $position = 'center';
-// get the width and heigh of the logo
+// get the width and height of the logo
 list($logoWidth, $logoHeight) = getimagesize($logo);
 
 $watermark = Bulletproof\watermark(
@@ -108,4 +108,4 @@ LICENSE
 Check the main [bulletproof][bulletproof] page for the license.
 
 
-[bulletproof]: http://github.com/samayo/bulletproof
+[bulletproof]: https://github.com/samayo/bulletproof
