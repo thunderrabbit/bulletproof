@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * BULLETPROOF.
  *
@@ -87,6 +87,7 @@ class Image implements \ArrayAccess
      * @var array storage for the global array
      */
     private $_files = array();
+    private $_file = array();
 
     /**
      * @var string storage for any errors
@@ -145,11 +146,11 @@ class Image implements \ArrayAccess
           return false;
         }
 
-      $this->_files = $this->_files[$offset];
+      $this->_file = $this->_files[$offset];
 
        /* check for common upload errors */
-      if (isset($this->_files['error'])) {
-        $this->error = $this->commonErrors[$this->_files['error']];
+      if (isset($this->_file['error'])) {
+        $this->error = $this->commonErrors[$this->_file['error']];
       }
 
       return $this->error ? false : true;
@@ -187,7 +188,7 @@ class Image implements \ArrayAccess
      */
     public function getSize()
     {
-      return (int) $this->_files['size'];
+      return (int) $this->_file['size'];
     }
 
     /**
@@ -217,7 +218,7 @@ class Image implements \ArrayAccess
           'mime' => $this->mime,
           'height' => $this->height,
           'width' => $this->width,
-          'size' => $this->_files['size'],
+          'size' => $this->_file['size'],
           'storage' => $this->storage,
           'path' => $this->path,
         )
@@ -232,7 +233,7 @@ class Image implements \ArrayAccess
     public function getMime()
     {
       if (!$this->mime) {
-        $this->mime = $this->getImageMime($this->_files['tmp_name']);
+        $this->mime = $this->getImageMime($this->_file['tmp_name']);
       }
 
       return $this->mime;
@@ -318,7 +319,7 @@ class Image implements \ArrayAccess
         return $this->width;
       }
 
-      list($width) = getimagesize($this->_files['tmp_name']);
+      list($width) = getimagesize($this->_file['tmp_name']);
 
       return $width;
     }
@@ -334,7 +335,7 @@ class Image implements \ArrayAccess
         return $this->height;
       }
 
-      list(, $height) = getimagesize($this->_files['tmp_name']);
+      list(, $height) = getimagesize($this->_file['tmp_name']);
 
       return $height;
     }
@@ -397,7 +398,7 @@ class Image implements \ArrayAccess
 
 
     public function validateMime() {
-      $this->getImageMime($this->_files['tmp_name']);
+      $this->getImageMime($this->_file['tmp_name']);
 
       if(!in_array($this->mime, $this->mimeTypes)) {
         $this->error = sprintf('Invalid File! Only (%s) image types are allowed', implode(', ', $this->mimeTypes));
@@ -409,7 +410,7 @@ class Image implements \ArrayAccess
 
     public function validateSize() {
       list($minSize, $maxSize) = $this->size;
-      if ($this->_files['size'] < $minSize || $this->_files['size'] > $maxSize) {
+      if ($this->_file['size'] < $minSize || $this->_file['size'] > $maxSize) {
         $min = $minSize.' bytes ('.intval($minSize / 1000).' kb)';
         $max = $maxSize.' bytes ('.intval($maxSize / 1000).' kb)';
         $this->error = 'Image size should be minimum '.$min.', upto maximum '.$max;
@@ -461,7 +462,7 @@ class Image implements \ArrayAccess
       $this->getName();
 
 
-      $isSuccess = $this->isValid() && $this->isSaved($this->_files['tmp_name'], $this->getPath());
+      $isSuccess = $this->isValid() && $this->isSaved($this->_file['tmp_name'], $this->getPath());
 
       return $isSuccess ? $this : false;
     }
