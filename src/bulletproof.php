@@ -163,8 +163,8 @@ class Image implements \ArrayAccess
     /**
      * Sets max image height and width limit.
      *
-     * @param $maxWidth int max width value
-     * @param $maxHeight int max height value
+     * @param int $maxWidth max width value
+     * @param int $maxHeight max height value
      *
      * @return $this
      */
@@ -198,8 +198,8 @@ class Image implements \ArrayAccess
     /**
      * Define a min and max image size for uploading.
      *
-     * @param $min int minimum value in bytes
-     * @param $max int maximum value in bytes
+     * @param int $min minimum value in bytes
+     * @param int $max maximum value in bytes
      *
      * @return $this
      */
@@ -259,7 +259,7 @@ class Image implements \ArrayAccess
     /**
      * Gets the real image mime type.
      *
-     * @param $tmp_name string The upload tmp directory
+     * @param string $tmp_name The upload tmp directory
      *
      * @return null|string
      */
@@ -296,7 +296,7 @@ class Image implements \ArrayAccess
     /**
      * Provide image name if not provided.
      *
-     * @param null $isNameProvided
+     * @param string $isNameProvided
      *
      * @return $this
      */
@@ -361,7 +361,7 @@ class Image implements \ArrayAccess
     /**
      * Validate directory/permission before creating a folder.
      *
-     * @param $dir string the folder name to check
+     * @param string $dir the folder name to check
      *
      * @return bool
      */
@@ -373,7 +373,7 @@ class Image implements \ArrayAccess
     /**
      * Creates a storage for upload storage.
      *
-     * @param $dir string the folder name to create
+     * @param string $dir the folder name to create
      * @param int $permission chmod permission
      *
      * @return $this
@@ -474,8 +474,8 @@ class Image implements \ArrayAccess
     /**
      * Final upload method to be called, isolated for testing purposes.
      *
-     * @param $tmp_name int the temporary storage of the image file
-     * @param $destination int upload destination
+     * @param string $tmp_name the temporary storage of the image file
+     * @param string $destination upload destination
      *
      * @return bool
      */
