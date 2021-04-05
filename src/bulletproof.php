@@ -131,11 +131,15 @@ class Image implements \ArrayAccess
     public function offsetUnset($offset){}
 
     /**
-     * \ArrayAccess - get array value from object
+     * \ArrayAccess - DOES NOT get array value from object
+     *
+     * This returns true/false based on the existence of an object at $offset.
+     * It then does an ugly side effect of setting $this->_file to the object,
+     * which affects the return value of other functions (getSize(), etc)
      *
      * @param mixed $offset
      *
-     * @return string|bool
+     * @return bool
      */
     public function offsetGet($offset)
     {
