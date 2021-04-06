@@ -371,7 +371,7 @@ class Image implements \ArrayAccess
     }
 
     /**
-     * Creates a storage for upload storage.
+     * Sets storage for upload storage.
      *
      * @param string $dir the folder name to create
      * @param int $permission chmod permission
@@ -380,7 +380,20 @@ class Image implements \ArrayAccess
      */
     public function setStorage($dir = 'uploads', $permission = 0666)
     {
+      $this->storage = $this->createStorage($dir, $permission);
+      return $this;
+    }
 
+    /**
+     * Creates a storage for upload storage.
+     *
+     * @param string $dir the folder name to create
+     * @param int $permission chmod permission
+     *
+     * @return string?
+     */
+    public function createStorage($dir = 'uploads', $permission = 0666)
+    {
       $isDirectoryValid = $this->isDirectoryValid($dir);
 
       if (!$isDirectoryValid) {
@@ -395,9 +408,7 @@ class Image implements \ArrayAccess
         return false;
       }
 
-      $this->storage = $dir;
-
-      return $this;
+      return $dir;
     }
 
 
